@@ -17,3 +17,6 @@ Live site: https://sadyba.webart.work
 
 ## Notes
 The page explicitly states several details are unverified: room categories, capacity, and prices (confirm by phone), whether parking is free and its capacity/conditions, and email, website, and Instagram (marked "not confirmed"). All photos on the page are labeled as illustrative rather than actual photos of the property.
+
+## Forms
+Connected to HotelOS (`hotelId` kp-sadyba): `stay-request` (no room-type select, categories are unverified). Phone is the only required field.

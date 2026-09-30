@@ -60,6 +60,14 @@
     .gallery{display:grid;grid-template-columns:1.2fr .8fr .8fr;grid-template-rows:220px 220px;gap:10px;margin-top:34px}.gallery figure{margin:0;overflow:hidden;border-radius:14px}
     .gallery figure:first-child{grid-row:span 2}.gallery-note{font-size:.76rem;color:var(--muted);margin-top:16px}
     .booking{background:var(--beige)}.form-card{background:#fff;border-radius:18px;padding:30px}
+    .request{background:var(--white)}.request-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:start}.request-phone{display:inline-block;margin-top:18px;font:700 clamp(1.5rem,3vw,2rem) var(--serif);color:var(--olive)}
+    .request-form{display:grid;grid-template-columns:1fr 1fr;gap:16px 14px;background:var(--cream);border:1px solid var(--line);border-radius:18px;padding:30px}
+    .field{display:grid;gap:6px;align-content:start;font-size:.8rem;font-weight:700;color:var(--graphite)}.field.full{grid-column:1/-1}.field small{font-weight:400;color:var(--muted)}
+    .field input,.field select,.field textarea{width:100%;min-height:50px;padding:11px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--graphite);font:400 1rem var(--sans)}.field textarea{min-height:110px;resize:vertical}
+    .field input:focus-visible,.field select:focus-visible,.field textarea:focus-visible{outline:3px solid var(--terracotta);outline-offset:1px}.field [aria-invalid=true]{border-color:var(--terracotta);box-shadow:0 0 0 1px var(--terracotta)}
+    [data-error-for]{font-weight:600;color:#a44d2b}[data-error-for]:empty{display:none}.trap{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+    .request-foot{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:14px}.request-foot .btn[disabled]{opacity:.6;cursor:wait;transform:none}.request-note{flex:1;min-width:200px;margin:0;font-size:.78rem;color:var(--muted)}
+    [data-status]{grid-column:1/-1;margin:0;padding:14px 16px;border-left:4px solid var(--olive);background:var(--white);border-radius:0 10px 10px 0;font-size:.9rem}[data-status]:empty{display:none}[data-status][data-state=error]{border-color:var(--terracotta)}[data-status] a{font-weight:700;text-decoration:underline}
     .final{min-height:460px;position:relative;display:grid;place-items:center;text-align:center;color:#fff;overflow:hidden}.final img{position:absolute;inset:0;height:100%;object-fit:cover}
     .final:after{content:"";position:absolute;inset:0;background:rgba(51,38,28,.66)}.final>div{position:relative;z-index:1;padding:60px 20px;max-width:680px}
     .final h2{font:700 clamp(2.3rem,6vw,4.2rem)/1.02 var(--serif);letter-spacing:-.02em;margin:.2em 0}.final .actions{justify-content:center}.final small{display:block;margin-top:22px;letter-spacing:.12em;text-transform:uppercase;color:#e9ddc9}
@@ -70,10 +78,10 @@
     .room,.parking-media,.gallery figure{overflow:hidden}.room img,.parking-media img,.gallery img{transition:transform 1.1s cubic-bezier(.16,.8,.3,1)}.room:hover img,.parking-media:hover img,.gallery figure:hover img{transform:scale(1.05)}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal,.reveal-item{opacity:1;transform:none;transition:none}.btn{transition:none}.hero-media{transform:none!important}.room img,.parking-media img,.gallery img{transition:none}}
     @media(max-width:880px){.nav,.header-in>.phone{display:none}
-      .about-grid,.parking-grid,.location-grid{grid-template-columns:1fr}.who-list{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}}
+      .about-grid,.parking-grid,.location-grid,.request-grid{grid-template-columns:1fr}.request-grid{gap:30px}.who-list{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}}
     @media(max-width:600px){body{padding-bottom:64px}.wrap{width:calc(100% - 26px)}.section{padding:64px 0}.hero{min-height:640px}.hero-content{padding:60px 0 50px}
       .facts-grid{grid-template-columns:1fr 1fr}.fact{padding:16px 10px}.room-grid{grid-template-columns:1fr}
-      .gallery{grid-template-columns:1fr;grid-template-rows:auto}.gallery figure,.gallery figure:first-child{grid-column:auto;height:210px}.footer-grid{grid-template-columns:1fr}.footer-bottom{flex-direction:column;gap:7px}
+      .request-form{grid-template-columns:1fr;padding:22px 16px}.gallery{grid-template-columns:1fr;grid-template-rows:auto}.gallery figure,.gallery figure:first-child{grid-column:auto;height:210px}.footer-grid{grid-template-columns:1fr}.footer-bottom{flex-direction:column;gap:7px}
       .mobile-sticky{display:grid;grid-template-columns:1fr 1fr;position:fixed;bottom:0;left:0;right:0;background:#fff;padding:9px;gap:8px;z-index:40;border-top:1px solid var(--line)}
       .mobile-sticky a{text-align:center;padding:11px;border-radius:9px;font-weight:800}.mobile-sticky a:first-child{background:var(--olive);color:#fff}.mobile-sticky a:last-child{background:var(--beige);color:var(--brown)}}
   </style>
@@ -86,14 +94,15 @@
     <section class="hero"><div class="hero-media"><video id="heroVideo" autoplay muted loop playsinline preload="auto" poster="images/exterior.jpg"><source src="hero-bg.mp4" type="video/mp4"></video></div><div class="wrap hero-content"><span class="eyebrow">Guest House · Смотрич</span><h1>Садиба</h1><h2>Спокійне місце для вашої зупинки</h2><p>Затишні номери готельного типу та парковка у Смотричі.</p><div class="actions"><a class="btn primary" href="#rooms">Переглянути проживання</a><a class="btn" style="border-color:#fff;color:#fff" href="tel:+380679815939">Зателефонувати</a></div><div class="hero-address"><span>с. Смотрич, вул. Героїв Майдану, 10а</span><a href="https://www.google.com/maps/search/?api=1&query=Садиба,+вул.+Героїв+Майдану+10а,+Смотрич" target="_blank" rel="noopener">Показати на карті →</a></div></div><span class="image-note">Ілюстративне зображення</span></section>
     <section class="facts"><div class="wrap facts-grid"><div class="fact"><b>Guest House</b><span>Формат садиби</span></div><div class="fact"><b>Rooms</b><span>Номери готельного типу</span></div><div class="fact"><b>Parking</b><span>Парковка</span></div><div class="fact"><b>Smotrych</b><span>Локація у Смотричі</span></div></div></section>
     <section class="section" id="about"><div class="wrap about-grid reveal"><div><span class="eyebrow">Просто затишно</span><h2>Без зайвих обіцянок</h2><p class="lead">«Садиба» пропонує проживання у Смотричі. У джерельному описі об’єкт вказаний як затишна садиба з номерами готельного типу та парковкою, саме це і є основою сторінки, без складного hotel positioning.</p><a class="btn primary" href="#rooms">Обрати номер</a></div><div class="about-note"><b>Невеликий формат проживання</b><p>Садиба, це альтернатива великому готелю для тих, хто шукає простіше та більш камерне місце для ночівлі: номери готельного типу та парковка.</p></div></div></section>
-    <section class="section rooms" id="rooms"><div class="wrap"><div class="rooms-head"><div><span class="eyebrow">STAY</span><h2>Номери готельного типу</h2></div><p>Категорії, місткість та ціни уточнюйте телефоном.</p></div><div class="room-grid reveal-group"><figure class="room reveal-item"><img src="images/room-a.jpg" alt="Приклад номера, ілюстративне зображення"><figcaption class="room-tag"><strong>Номер 1 · приклад</strong><small>Категорію та ціну уточнюйте</small></figcaption></figure><figure class="room reveal-item"><img src="images/room-b.jpg" alt="Приклад іншого номера, ілюстративне зображення"><figcaption class="room-tag"><strong>Номер 2 · приклад</strong><small>Категорію та ціну уточнюйте</small></figcaption></figure></div></div></section>
+    <section class="section rooms" id="rooms"><div class="wrap"><div class="rooms-head"><div><span class="eyebrow">STAY</span><h2>Номери готельного типу</h2></div><p>Категорії, місткість та ціни уточнюйте телефоном або <a href="#stay-request" style="color:var(--olive);font-weight:700;text-decoration:underline">залиште запит</a>.</p></div><div class="room-grid reveal-group"><figure class="room reveal-item"><img src="images/room-a.jpg" alt="Приклад номера, ілюстративне зображення"><figcaption class="room-tag"><strong>Номер 1 · приклад</strong><small>Категорію та ціну уточнюйте</small></figcaption></figure><figure class="room reveal-item"><img src="images/room-b.jpg" alt="Приклад іншого номера, ілюстративне зображення"><figcaption class="room-tag"><strong>Номер 2 · приклад</strong><small>Категорію та ціну уточнюйте</small></figcaption></figure></div></div></section>
     <section class="section parking" id="parking"><div class="wrap parking-grid reveal"><div class="parking-media"><img src="images/parking.jpg" alt="Парковка біля садиби, ілюстративне зображення"></div><div><span class="eyebrow">ARRIVE</span><h2>Приїжджайте автомобілем</h2><p class="lead">У джерельному описі підтверджена наявність парковки, один із небагатьох конкретних практичних плюсів об’єкта. Безкоштовність, місткість і умови поки не підтверджені.</p><a class="btn terra" href="https://www.google.com/maps/search/?api=1&query=Садиба,+вул.+Героїв+Майдану+10а,+Смотрич" target="_blank" rel="noopener">Прокласти маршрут</a><div class="who-list reveal-group"><div class="who-card reveal-item"><b>Подорожуєте авто?</b><span>Є парковка поруч із проживанням.</span></div><div class="who-card reveal-item"><b>Потрібна проста ночівля?</b><span>Номери готельного типу.</span></div><div class="who-card reveal-item"><b>Не потрібен великий готель?</b><span>Камерний guest-house формат.</span></div><div class="who-card reveal-item"><b>Шукаєте Смотрич?</b><span>Об’єкт розташований саме тут.</span></div></div><div class="stay-lengths"><div>На одну ніч</div><div>На кілька днів</div></div></div></div></section>
     <section class="section location" id="contacts"><div class="wrap location-grid reveal"><div class="map-card"><div><span class="eyebrow">Location</span><h2 style="font:600 clamp(1.9rem,4vw,2.8rem)/1.05 var(--serif);margin:.2em 0">Садиба у Смотричі, не в Кам’янці-Подільському</h2></div><div><p>с. Смотрич<br>вул. Героїв Майдану, 10а</p><a class="btn terra" href="https://www.google.com/maps/search/?api=1&query=Садиба,+вул.+Героїв+Майдану+10а,+Смотрич" target="_blank" rel="noopener">Відкрити у Google Maps ↗</a></div></div><div class="contact-card"><span class="eyebrow">Контакти</span><h2 style="font:600 clamp(1.9rem,4vw,2.8rem)/1.05 var(--serif);margin:.2em 0">Садиба</h2><a class="big" href="tel:+380679815939">+38 067 981 59 39</a><dl><dt>Адреса</dt><dd>вул. Героїв Майдану, 10а, с. Смотрич</dd><dt>Email / сайт / Instagram</dt><dd>Не підтверджено</dd><dt>Графік</dt><dd>Уточніть телефоном</dd></dl></div></div></section>
     <section class="section" id="gallery"><div class="wrap"><span class="eyebrow">Gallery</span><h2>Подивіться садибу</h2><div class="gallery reveal-group"><figure class="reveal-item"><img src="images/exterior.jpg" alt="Ілюстративний вигляд садиби" loading="lazy"></figure><figure class="reveal-item"><img src="images/room-a.jpg" alt="Ілюстративний номер" loading="lazy"></figure><figure class="reveal-item"><img src="images/territory.jpg" alt="Ілюстративна територія садиби" loading="lazy"></figure><figure class="reveal-item"><img src="images/parking.jpg" alt="Ілюстративна парковка" loading="lazy"></figure></div><p class="gallery-note">Зображення поки ілюстративні. Перед публікацією реальних фото важливо показати саме те місце, куди приїде гість.</p></div></section>
+    <section class="section request" id="stay-request"><div class="wrap request-grid"><div class="reveal"><span class="eyebrow">Запит на проживання</span><h2>Залиште номер, ми передзвонимо</h2><p class="lead">Вкажіть телефон і, за бажанням, дати поїздки. Ми зателефонуємо, щоб уточнити наявність, кімнату та вартість.</p><a class="request-phone" href="tel:+380679815939">+38 067 981 59 39</a></div><form class="request-form reveal" data-hotelos data-form-name="Запит на проживання" novalidate><label class="field full">Телефон<small>Обов’язково, щоб ми могли передзвонити</small><input name="phone" type="tel" autocomplete="tel" inputmode="tel" required><span data-error-for="phone"></span></label><label class="field">Ім’я<input name="name" type="text" autocomplete="name" maxlength="200"></label><label class="field">Гостей<input name="guests" type="number" min="1" max="50" inputmode="numeric"></label><label class="field">Дата заїзду<input name="checkIn" type="date"></label><label class="field">Дата виїзду<input name="checkOut" type="date"><span data-error-for="checkOut"></span></label><label class="field full">Побажання<textarea name="message" maxlength="5000"></textarea></label><label class="trap" aria-hidden="true">Не заповнюйте<input name="website" type="text" tabindex="-1" autocomplete="off"></label><div class="request-foot"><button class="btn primary" type="submit">Надіслати запит</button><p class="request-note">Номер використаємо лише для відповіді на цей запит.</p></div><p data-status role="status" aria-live="polite"></p></form></div></section>
     <section class="section booking" id="booking"><div class="wrap"><div class="form-card" style="max-width:520px;margin:auto;text-align:center"><span class="eyebrow">Контакти</span><h2>Зв'яжіться з нами</h2><p class="lead" style="margin:0 auto 22px">Зателефонуйте, щоб уточнити наявність, кімнату та вартість.</p><a class="big" href="tel:+380679815939" style="display:block;font:700 clamp(1.6rem,4vw,2.3rem) var(--serif);color:var(--olive);margin-bottom:18px">+38 067 981 59 39</a><p style="margin:0 0 18px">с. Смотрич, вул. Героїв Майдану, 10а</p><a class="btn terra" href="https://www.google.com/maps/search/?api=1&query=Садиба,+вул.+Героїв+Майдану+10а,+Смотрич" target="_blank" rel="noopener">Відкрити у Google Maps ↗</a></div></div></section>
-    <section class="final"><img src="images/exterior.jpg" alt="Садиба у Смотричі, ілюстративне зображення"><div><span class="eyebrow" style="color:#e9c9a8">Guest House · Rooms · Parking</span><h2>Потрібна затишна зупинка у Смотричі?</h2><p>Зателефонуйте, щоб уточнити доступність кімнат на потрібні вам дати.</p><div class="actions"><a class="btn terra" href="#booking">Контакти</a><a class="btn" style="border-color:#fff;color:#fff" href="tel:+380679815939">+38 067 981 59 39</a></div></div></section>
+    <section class="final"><img src="images/exterior.jpg" alt="Садиба у Смотричі, ілюстративне зображення"><div><span class="eyebrow" style="color:#e9c9a8">Guest House · Rooms · Parking</span><h2>Потрібна затишна зупинка у Смотричі?</h2><p>Зателефонуйте, щоб уточнити доступність кімнат на потрібні вам дати.</p><div class="actions"><a class="btn terra" href="#stay-request">Залишити запит</a><a class="btn" style="border-color:#fff;color:#fff" href="#booking">Контакти</a><a class="btn" style="border-color:#fff;color:#fff" href="tel:+380679815939">+38 067 981 59 39</a></div></div></section>
   </main>
-  <footer><div class="wrap"><div class="footer-grid"><div class="footer-brand"><strong>САДИБА</strong><small>Guest House · Смотрич</small></div><div class="footer-col"><b>Stay</b><a href="#rooms">Номери</a><a href="#booking">Контакти</a></div><div class="footer-col"><b>Information</b><a href="#parking">Парковка</a><a href="#gallery">Галерея</a><a href="#contacts">Карта й контакти</a></div></div><div class="footer-bottom"><span>вул. Героїв Майдану, 10а · Смотрич</span><span>+38 067 981 59 39</span></div></div></footer>
+  <footer><div class="wrap"><div class="footer-grid"><div class="footer-brand"><strong>САДИБА</strong><small>Guest House · Смотрич</small></div><div class="footer-col"><b>Stay</b><a href="#rooms">Номери</a><a href="#stay-request">Запит на проживання</a><a href="#booking">Контакти</a></div><div class="footer-col"><b>Information</b><a href="#parking">Парковка</a><a href="#gallery">Галерея</a><a href="#contacts">Карта й контакти</a></div></div><div class="footer-bottom"><span>вул. Героїв Майдану, 10а · Смотрич</span><span>+38 067 981 59 39</span></div></div></footer>
   <div class="mobile-sticky"><a href="tel:+380679815939">Зателефонувати</a><a href="#booking">Контакти</a></div>
   <script>
     const observer=new IntersectionObserver(entries=>entries.forEach(e=>e.isIntersecting&&e.target.classList.add('visible')),{threshold:.1});document.querySelectorAll('.reveal,.reveal-group').forEach(el=>observer.observe(el));
@@ -107,6 +116,153 @@
         addEventListener('scroll',()=>{const r=hero.getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight)heroMedia.style.transform=`translateY(${scrollY*.22}px)`},{passive:true});
       }
     }
+  </script>
+  <script type="module">
+// HotelOS site forms. Paste this whole block into the site's index.html as an inline module
+// script right before the closing body tag, and set the three constants below. Never put a
+// literal closing script tag inside this file: it would end the inline script early.
+// Contract (hotelos.webart.work/CRM.md → Submission data contract, firestore.rules):
+// - every form is <form data-hotelos data-form-name="…" novalidate> inside a <section id="{formId}">;
+//   the section id IS the formId (stable slug, e.g. stay-request, sauna-request) and the CRM
+//   links to SITE + '#' + formId, so the link scrolls to the start of that section;
+// - fields are matched by name: phone (required), name, email, message, checkIn, checkOut, guests,
+//   roomType, date, time, service; a [data-genders] box renders one select per guest (hostels);
+// - errors go to [data-error-for="<name>"], the result to [data-status]; `website` is a honeypot.
+const HOTEL_ID = 'kp-sadyba'; // Firestore hotels/{id}: 'kp-' + site folder name
+const SITE = 'https://sadyba.webart.work/'; // from the site's CNAME
+const PHONE = '+38 067 981 59 39'; // shown when sending fails
+
+const FIREBASE = {
+	apiKey: 'AIzaSyBeSB5EuC4BBSpmCGA3Pjk7dD_JV2SdcSQ',
+	authDomain: 'hotel-upwork.firebaseapp.com',
+	projectId: 'hotel-upwork',
+	appId: '1:40129364672:web:c9659550ebf0f1d8a36325',
+};
+const SDK = 'https://www.gstatic.com/firebasejs/12.19.0/';
+const TEXT_FIELDS = ['name', 'email', 'message', 'checkIn', 'checkOut', 'date', 'time', 'roomType', 'service'];
+const today = new Date(Date.now() - new Date().getTimezoneOffset() * 6e4).toISOString().slice(0, 10);
+
+let db;
+async function firestore() {
+	if (db) return db;
+	// Loaded on first submit only, so the page itself stays light.
+	const [{ initializeApp }, lite] = await Promise.all([import(SDK + 'firebase-app.js'), import(SDK + 'firebase-firestore-lite.js')]);
+	db = { lite, store: lite.getFirestore(initializeApp(FIREBASE)) };
+	return db;
+}
+
+function setup(form) {
+	const formId = form.closest('section[id]')?.id;
+	if (!formId) return console.error('HotelOS form needs a parent <section id="formId">', form);
+	const field = (name) => form.elements.namedItem(name);
+	const statusEl = form.querySelector('[data-status]');
+	const submit = form.querySelector('[type=submit]');
+	const submitLabel = submit.textContent;
+	const gendersBox = form.querySelector('[data-genders]');
+
+	for (const name of ['checkIn', 'checkOut', 'date']) if (field(name)) field(name).min = today;
+	if (field('checkIn') && field('checkOut')) {
+		field('checkIn').addEventListener('change', () => {
+			const checkIn = field('checkIn').value;
+			field('checkOut').min = checkIn || today;
+			if (field('checkOut').value && field('checkOut').value <= checkIn) field('checkOut').value = '';
+		});
+	}
+
+	// Hostels: one gender select per guest, kept in sync with the guests count.
+	function renderGenders() {
+		if (!gendersBox) return;
+		const count = Math.min(Math.max(parseInt(field('guests')?.value, 10) || 1, 1), 20);
+		const current = [...gendersBox.querySelectorAll('select')].map((select) => select.value);
+		gendersBox.replaceChildren(
+			...Array.from({ length: count }, (_, i) => {
+				const label = document.createElement('label');
+				label.textContent = `Гість ${i + 1}`;
+				const select = document.createElement('select');
+				select.name = 'gender';
+				select.required = true;
+				select.innerHTML = '<option value="">Стать</option><option value="female">Жінка</option><option value="male">Чоловік</option>';
+				select.value = current[i] ?? '';
+				label.append(select);
+				return label;
+			}),
+		);
+	}
+	if (gendersBox) {
+		field('guests')?.addEventListener('input', renderGenders);
+		renderGenders();
+	}
+
+	function setError(name, text) {
+		const input = field(name);
+		if (input instanceof Element) input.setAttribute('aria-invalid', text ? 'true' : 'false');
+		const slot = form.querySelector(`[data-error-for="${name}"]`);
+		if (slot) slot.textContent = text;
+	}
+
+	function showStatus(state, html) {
+		statusEl.dataset.state = state;
+		statusEl.innerHTML = html;
+	}
+
+	form.addEventListener('submit', async (event) => {
+		event.preventDefault();
+		showStatus('', '');
+		const phone = field('phone').value.trim();
+		const digits = phone.replace(/\D/g, '');
+		setError('phone', digits.length < 9 || digits.length > 15 ? 'Вкажіть номер телефону, щоб ми могли передзвонити.' : '');
+		if (field('checkIn') && field('checkOut')) {
+			const { value: checkIn } = field('checkIn');
+			const { value: checkOut } = field('checkOut');
+			setError('checkOut', checkIn && checkOut && checkOut <= checkIn ? 'Дата виїзду має бути пізніше за дату заїзду.' : '');
+		}
+		const genderSelects = gendersBox ? [...gendersBox.querySelectorAll('select')] : [];
+		if (gendersBox) {
+			const missing = genderSelects.some((select) => !select.value);
+			for (const select of genderSelects) select.setAttribute('aria-invalid', missing && !select.value ? 'true' : 'false');
+			const slot = form.querySelector('[data-error-for="genders"]');
+			if (slot) slot.textContent = missing ? 'Вкажіть стать кожного гостя, щоб ми підібрали місця.' : '';
+		}
+		const invalid = form.querySelector('[aria-invalid=true]');
+		if (invalid) return invalid.focus();
+
+		const thanks = `Дякуємо! Ми зателефонуємо на ${phone.replace(/</g, '')} найближчим часом.`;
+		// Bots fill the hidden field: pretend success, send nothing.
+		if (field('website')?.value) {
+			form.reset();
+			renderGenders();
+			return showStatus('ok', thanks);
+		}
+
+		const lead = { phone, formId, formName: form.dataset.formName, site: SITE, hotelId: HOTEL_ID };
+		for (const name of TEXT_FIELDS) {
+			const value = field(name)?.value?.trim();
+			if (value) lead[name] = value;
+		}
+		const guests = parseInt(field('guests')?.value, 10);
+		if (guests >= 1 && guests <= 50) lead.guests = guests;
+		if (genderSelects.length) lead.genders = genderSelects.map((select) => select.value);
+
+		submit.disabled = true;
+		submit.textContent = 'Надсилаємо…';
+		try {
+			const { lite, store } = await firestore();
+			await lite.addDoc(lite.collection(store, 'submissions'), { ...lead, status: 'new', history: [], createdAt: lite.serverTimestamp() });
+			form.reset();
+			if (field('checkOut')) field('checkOut').min = today;
+			renderGenders();
+			showStatus('ok', thanks);
+		} catch (error) {
+			console.error(error);
+			showStatus('error', `Не вдалося надіслати запит. Зателефонуйте нам: <a href="tel:${PHONE.replace(/[^\d+]/g, '')}">${PHONE}</a>.`);
+		} finally {
+			submit.disabled = false;
+			submit.textContent = submitLabel;
+		}
+	});
+}
+
+document.querySelectorAll('form[data-hotelos]').forEach(setup);
   </script>
 </body>
 </html>
